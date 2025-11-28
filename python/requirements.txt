@@ -1,0 +1,5 @@
+# Zenoh Python SDK
+eclipse-zenoh>=1.0.0
+
+# CDR serialization
+pycdr2>=1.0.0

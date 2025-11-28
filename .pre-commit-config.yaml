@@ -1,0 +1,105 @@
+repos:
+  # General hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+        args: ["--maxkb=2000"]
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: mixed-line-ending
+      - id: detect-private-key
+
+  # Python
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        language_version: python3
+        args: ["--line-length", "120"]
+        files: ^python/
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        files: ^python/
+        args: ["--profile", "black", "--filter-files"]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        files: ^python/
+        args: ["--max-line-length=120", "--extend-ignore=E203,W503"]
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        args: ["--ignore-words-list=crate,inout", "--skip=rust/Cargo.lock"]
+
+  # License headers
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.1
+    hooks:
+      - id: insert-license
+        name: insert-license (Python)
+        files: \.py$
+        args:
+          - --license-filepath
+          - .github/LICENSE_HEADER.txt
+          - --use-current-year
+          - --comment-style
+          - "|#|"
+
+      - id: insert-license
+        name: insert-license (Rust)
+        files: \.rs$
+        args:
+          - --license-filepath
+          - .github/LICENSE_HEADER.txt
+          - --use-current-year
+          - --comment-style
+          - "|//|"
+
+      - id: insert-license
+        name: insert-license (C++)
+        files: \.(cpp|hpp|c|h)$
+        args:
+          - --license-filepath
+          - .github/LICENSE_HEADER.txt
+          - --use-current-year
+          - --comment-style
+          - "|//|"
+
+  # Rust
+  - repo: local
+    hooks:
+      - id: cargo-fmt
+        name: cargo fmt
+        entry: bash -c 'cd rust && cargo fmt --all'
+        language: system
+        files: \.rs$
+        pass_filenames: false
+
+      - id: cargo-clippy
+        name: cargo clippy
+        entry: bash -c 'cd rust && cargo clippy --all-targets --fix --allow-dirty --allow-staged -- -D warnings'
+        language: system
+        files: \.rs$
+        pass_filenames: false
+
+  # C++
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v18.1.0
+    hooks:
+      - id: clang-format
+        files: ^cpp/.*\.(cpp|hpp)$
+        args: ["-i", "--style={BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100}"]

@@ -1,0 +1,32 @@
+[package]
+name = "zenoh_ros2dds_example"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ziqi Fan"]
+license = "Apache-2.0"
+description = "Message communication between remote machines and ROS2 through Zenoh"
+repository = "https://github.com/yourusername/zenoh_ros2dds_example"
+keywords = ["zenoh", "ros2", "dds", "robotics", "middleware"]
+categories = ["network-programming", "robotics"]
+
+[dependencies]
+zenoh = "1.0"
+ctrlc = "3.4"
+cdr = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+
+[[bin]]
+name = "publisher"
+path = "src/bin/publisher.rs"
+
+[[bin]]
+name = "subscriber"
+path = "src/bin/subscriber.rs"
+
+[[bin]]
+name = "client"
+path = "src/bin/client.rs"
+
+[[bin]]
+name = "server"
+path = "src/bin/server.rs"

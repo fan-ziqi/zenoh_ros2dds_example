@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zenoh-ros2dds-example"
+version = "0.1.0"
+description = "Message communication between remote machines and ROS2 through Zenoh"
+readme = "../README.md"
+requires-python = ">=3.8"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "Ziqi Fan"}
+]
+keywords = ["zenoh", "ros2", "dds", "robotics", "middleware"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "zenoh>=1.0.0",
+    "pycdr2>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=24.3.0",
+    "isort>=5.13.0",
+    "flake8>=7.0.0",
+    "pre-commit>=3.0.0",
+]
+
+[project.scripts]
+zenoh-ros2-publisher = "publisher:main"
+zenoh-ros2-subscriber = "subscriber:main"
+zenoh-ros2-client = "client:main"
+zenoh-ros2-server = "server:main"
+
+[project.urls]
+Homepage = "https://github.com/ZettaScaleLabs/zenoh"
+Documentation = "https://zenoh.io"
+Repository = "https://github.com/yourusername/zenoh_ros2dds_example"
+Issues = "https://github.com/yourusername/zenoh_ros2dds_example/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*.py"]
+
+[tool.black]
+line-length = 120
+target-version = ['py310', 'py311', 'py312']
+
+[tool.isort]
+profile = "black"
+line_length = 120
